@@ -1,7 +1,7 @@
 # runweb
 
 ## Installation
-`npm install runweb`
+`npm install runweb -g`
 
 ## Usage
 

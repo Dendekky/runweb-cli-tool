@@ -1,15 +1,26 @@
 {
   "name": "runweb",
   "version": "1.0.3",
-  "description": "",
+  "description": "Check website from the terminal to see if they are up or down. Option to launch checked website.",
   "main": "index.js",
   "bin": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "check",
+    "website",
+    "run",
+    "open",
+    "launch",
+    "down"
+  ],
+  "author": {
+    "name":"Ibrahim Adeniyi",
+    "email": "adeniyiib360@gmail.com",
+    "url": "https://dendekky.me"
+  },
+  "license": "MIT",
   "dependencies": {
     "arg": "^4.1.2",
     "inquirer": "^7.0.3",
