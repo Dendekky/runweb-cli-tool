@@ -51,9 +51,10 @@ async function LaunchWebsite(result) {
 const website = process.argv[2]; 
 
 function CheckWeb(name) {
-    const substrings =['.com', '.org', '.ng', '.io', '.to', '.ai', 'co', 'ca'];
-
-    if (new RegExp(substrings.join("|")).test(name)) {
+    // const substrings =['.com', '.org', '.ng', '.io', '.to', '.ai', 'co', 'ca'];
+    // if (new RegExp(substrings.join("|")).test(name)) {
+    // too much extensions, so decided to go for a simpler substring method
+      if (name.indexOf('.') > -1) {
         const info =fetch(`https://isitup.org/${name}.json`)
         .then(response => response.json());
         
@@ -77,7 +78,7 @@ function CheckWeb(name) {
             }
         });
     } else {
-        console.log('\x1b[31m%s\x1b[0m', 'please append your url ending e.g(mouse.com)')
+        console.log('\x1b[31m%s\x1b[0m', 'please append your url extension e.g(mouse.com)')
     }
 }
 
