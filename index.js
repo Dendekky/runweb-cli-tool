@@ -1,8 +1,53 @@
 #!/usr/bin/env node
 const fetch = require("node-fetch");
 const open = require('open');
+const arg = require('arg');
+const inquirer = require('inquirer');
 
-// console.log(process.argv);
+function parseArgumentsIntoOptions() {
+    const args = arg(
+      {
+        '--website': Boolean,
+        '--yes': Boolean,
+        '-w': '--website',
+        '-y': '--yes',
+      },
+      {
+        argv: process.argv.slice(2),
+      }
+    );
+    return {
+      website: args['--website'] || false,
+    };
+}
+
+async function promptForMissingOptions(options) {
+    const questions = [];
+   
+    if (!options.website) {
+      questions.push({
+        type: 'confirm',
+        name: 'website',
+        message: 'Open the website on your browser?',
+        default: false,
+      });
+    }
+   
+    const answers =  await inquirer.prompt(questions);
+    return {
+      ...options,
+      website: options.website || answers.website,
+    };
+}
+   
+async function LaunchWebsite(result) {
+    let options = parseArgumentsIntoOptions();
+    options =  await promptForMissingOptions(options);
+    if (options.website == true) {
+        open(`https://${result.domain}`); 
+    }
+}
+
 const website = process.argv[2]; 
 
 function CheckWeb(name) {
@@ -13,23 +58,19 @@ function CheckWeb(name) {
         .then(response => response.json());
         
         info.then(function(result) {
-            function openWebSite () {
-                setTimeout(function()
-                { open(`https://${result.domain}`); }, 3000);
-            };
-
             if (result.response_code == 200) {
                 console.log('\x1b[32m%s\x1b[0m', 'website is up and running');
-                openWebSite();
+                // openWebSite();
+                LaunchWebsite(result)
             } else if (result.response_code == 301) {
-                console.log('\x1b[32m%s\x1b[0m', 'website has been moved permanently but is up');
-                openWebSite();
+                console.log('\x1b[34m%s\x1b[0m', 'website has been moved permanently but is up');
+                LaunchWebsite(result)
             } else if (result.response_code == 302){
                 console.log('\x1b[34m%s\x1b[0m', 'temporary redirect, website is up');
-                openWebSite();
+                LaunchWebsite(result)
             } else if (result.response_code == 403) {
                 console.log('\x1b[33m%s\x1b[0m', 'information not found');
-                openWebSite();
+                LaunchWebsite(result)
             }
             else {
                 console.log('\x1b[31m%s\x1b[0m', 'website is down')
