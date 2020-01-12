@@ -1,7 +1,7 @@
 {
   "name": "runweb",
   "version": "1.0.4",
-  "description": "Check website from the terminal to see if they are up or down. Option to launch checked website.",
+  "description": "Check website from the terminal to see if it is runing or down. Option to launch checked website.",
   "main": "index.js",
   "bin": "./index.js",
   "scripts": {

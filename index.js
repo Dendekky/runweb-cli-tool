@@ -61,7 +61,6 @@ function CheckWeb(name) {
         info.then(function(result) {
             if (result.response_code == 200) {
                 console.log('\x1b[32m%s\x1b[0m', 'website is up and running');
-                // openWebSite();
                 LaunchWebsite(result)
             } else if (result.response_code == 301) {
                 console.log('\x1b[34m%s\x1b[0m', 'website has been moved permanently but is up');
